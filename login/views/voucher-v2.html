@@ -1,0 +1,98 @@
+ <div style="overflow-x:hidden;">
+	<nav class="navbar navbar-expand-lg navbar-dark" style="background: prefix-linear-gradient(left, #e42629, #ee7f17);background: linear-gradient(to right, #e42629,#ee7f17);">
+		<a class="navbar-brand Kalinga-bold" style="color:white;" routerLink="/init"><img src="assets/images/isotipo.png" height="30"></a>
+	</nav>
+	<div class="top-content" style="margin-top:30px;">
+			<div class="row">
+				<div class="col-lg-12 col-md-12  col-sm-12  col-12">
+					<msg-component [mensaje]="mensaje" (valueChanged)="getValueMsg($event)" ></msg-component>
+					<loading-service></loading-service>   
+					<form class="text-center  p-4">
+					<h4 class="Kalinga-bold" style="margin-bottom:0px;padding-bottom:0px;color:#413E3B;margin-top:0px;">Pago procesado</h4>
+					<div class="row" style="margin-top:15px;">
+						<div class="col-lg-8 offset-lg-2 col-md-12 col-sm-12 col-12">
+							<div class="card">
+								<div class="card-body" style="padding:20px;">
+									<div class="row">
+										<div class="col-lg-6 col-md-6 col-sm-6 col-12" *ngIf="banco!=null" style="text-align:left;">
+											<div style="display:inline-block;margin-right:10px;vertical-align:top;">
+												<img [src]="banco.imagen" *ngIf="banco.imagen!=null" width="40px">
+											</div>
+											<div style="display:inline-block;">
+												<h5 class="Kalinga" style="margin-top:0px;margin-bottom:0px;" *ngIf="banco.number!=null">{{banco.number}}</h5>
+												<label class="Kalinga-bold" style="margin-top:0px;margin-bottom:0px;color:#757575;font-size:14px;"  *ngIf="banco.formatted_type!=null">{{banco.formatted_type}}</label><br *ngIf="nro_afiliacion!=null"> 
+												<label class="Kalinga" style="margin-top:0px;margin-bottom:0px;color:black;font-size:12" *ngIf="nro_afiliacion!=null">AFILIADO:&nbsp;&nbsp;{{nro_afiliacion}}</label><br>
+												<label class="Kalinga" style="margin-top:0px;margin-bottom:0px;color:black;font-size:12px;"  *ngIf="dispositivo!=null">TERMINAL: {{dispositivo}}</label>&nbsp;&nbsp;<label class="Kalinga"  style="margin-top:0px;margin-bottom:0px;color:black;font-size:12px;" *ngIf="lot!=null">LOTE: {{lot}} </label>
+											</div>
+										</div>
+										<div class="col-lg-6 col-md-6 col-sm-6 col-12" style="text-align:right;">
+											<h4 class="Kalinga-bold" style="margin-top:0px;margin-bottom:0px;color:#ff9800;" *ngIf="alias!=null">{{alias}}</h4>
+											<label class="Kalinga" style="margin-top:0px;margin-bottom:0px;color:#757575;font-size:14px;"  *ngIf="formatted_status!=null">&nbsp;&nbsp;{{formatted_status}}</label><br *ngIf="nro_aprobacion!=null">
+										</div>
+									</div>
+									<div style="margin-top:15px;" class="row">
+										<div class="col-lg-12 col-md-12 col-sm-12 col-12" style="text-align:center;">
+											<h2 class="Kalinga" style="color:black;margin-bottom:0px;"><label class="Kalinga-bold" style="font-size:14px;margin-bottom:0px;">{{moneda}}</label>&nbsp;{{amount}}</h2>
+										</div>
+										<div class="col-lg-12 col-md-12 col-sm-12 col-12" style="text-align:center;color:#9e9e9e;" *ngIf="reason!=null">
+											<h6 class="Kalinga" style="color:black;margin-top:0px;" >{{reason}}</h6>
+										</div>
+									</div>
+									<div style="margin-top:15px;" class="row">
+										<div class="col-lg-6 col-md-6 col-sm-6 col-12" style="text-align:center;">
+											<p class="Kalinga">
+												<b>Para</b><br>
+													{{para}}<br>
+													{{para_document}}
+										</div>
+										<div class="col-lg-6 col-md-6 col-sm-6 col-12" style="text-align:center;">
+											<p class="Kalinga">
+												<b>De</b><br>
+													{{de}}<br>
+													{{de_document}}
+										</div>
+									</div>
+									<div style="margin-top:15px;" class="row">
+										<div class="col-lg-6 col-md-6 col-sm-6 col-12" style="text-align:left;">
+											<div style="width:100%">
+												<div style="display:inline-block;">
+													<img [src]="imagen_banco" *ngIf="imagen_banco!=null" width="40px">
+												</div>
+												<div style="display:inline-block;">
+													<label class="Kalinga" style="margin-top:0px;margin-bottom:0px;color:black;font-size:12px;"  *ngIf="metodo!=null">{{metodo}}</label>
+												</div>
+											</div>
+											
+											<label class="Kalinga" style="margin-top:0px;margin-bottom:0px;color:black;font-size:12px;"  *ngIf="referencia!=null">REF:&nbsp;{{referencia}}</label><br *ngIf="referencia!=null">
+											<label class="Kalinga" style="margin-top:0px;margin-bottom:0px;color:black;font-size:12" *ngIf="nro_aprobacion!=null">APROB: {{nro_aprobacion}}</label>&nbsp;&nbsp;
+											 <label class="Kalinga" style="margin-top:0px;margin-bottom:0px;color:black;font-size:12" *ngIf="sequence!=null">REF: {{sequence}} </label>&nbsp;&nbsp;<label class="Kalinga"  style="margin-top:0px;margin-bottom:0px;color:black;font-size:12px;" *ngIf="trace!=null">TRACE: {{trace}} </label>
+										</div>
+										<div class="col-lg-6 col-md-6 col-sm-6 col-12" style="text-align:right;">
+											<label class="Kalinga" style="margin-top:0px;margin-bottom:0px;color:black;font-size:12px;"  *ngIf="fecha!=null">{{fecha}}</label><br>
+											<label class="Kalinga" style="margin-top:0px;margin-bottom:0px;color:black;font-size:10px;"  *ngIf="nro_orden!=null">#Pago:&nbsp;&nbsp;{{nro_orden}}</label>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div style="text-align:right;">
+								<button type="button" class="btn btn-outline-grey btn-rounded waves-effect d-none d-sm-inline-block Poppins-regular"(click)="back()" style="font-size:13px;"><i class="fa fa-undo"></i>&nbsp;Regresar</button>
+								<button class="btn btn-rounded waves-effect z-depth-0 Kalinga-bold" (click)="registrarse()" style="padding-top:12px;padding-bottom:12px;margin-bottom:0px;background: prefix-linear-gradient(left, #e42629, #ea5e1e);background: linear-gradient(to right, #e42629,#ea5e1e);" lang="es">Registrarse</button>
+							</div>
+						</div>
+					</div>
+				</form>
+					
+				</div>
+			</div>
+		<footer class="page-footer grey lighten-2 d-block d-sm-none" style="bottom:0px;right:0px;width:100%;margin-top:10px;">
+			<div class="footer-copyright text-center py-3 Kalinga" style="vertical-align:middle;font-size:13px;bottom:0px;float:bottom;line-height:15px;background:#8d8d8d;">© calcYearCopy()Copyright:
+				<a href="https://www.paguetodo.com" style="font-size:13px;" class="Kalinga-bold"> Servicios Paguetodo C.A.</a>
+			</div>
+		</footer>
+		<footer class="page-footer grey lighten-2 d-none d-sm-inline-block" style="bottom:0px;right:0px;width:100%;margin-top:10px;position:fixed;">
+			<div class="footer-copyright text-center py-3 Kalinga" style="vertical-align:middle;font-size:13px;bottom:0px;float:bottom;line-height:15px;background:#8d8d8d;">© calcYearCopy()Copyright:
+				<a href="https://www.paguetodo.com" style="font-size:13px;" class="Kalinga-bold"> Servicios Paguetodo C.A.</a>
+			</div>
+		</footer>
+	</div>
+</div>

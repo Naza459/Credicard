@@ -1,0 +1,268 @@
+<div>
+	<nav class="navbar navbar-expand-lg navbar-dark" style="background: prefix-linear-gradient(left, #e42629, #ee7f17);background: linear-gradient(to right, #e42629,#ee7f17);">
+		<a class="navbar-brand Kalinga-bold" style="color:white;" routerLink="/init"><img src="assets/images/isotipo.png" height="30"></a>
+	</nav>
+	<div class="top-content" style="margin-top:30px;overflow-x:hidden;heigth:100%;margin-bottom:20px;">
+		<msg-component [mensaje]="mensaje"></msg-component>
+		<div class="row">
+			<div class="col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-sm-12 col-xs-12" >
+				<loading-service></loading-service>   
+				<form #resendActivationForm="ngForm" class="text-center border border-light p-4" style="margin-bottom: 3em;">
+					<img src="assets/images/logo_app2.png" alt="" style="width:200px;">
+					<p class="h5 Kalinga-bold" lang="es">Pago rápido</p>
+					<div class="row">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-12" style="text-align:center;">
+							<img [src]="imagen" height="40px"  style="text-align:center;object-fit: contain;" *ngIf="imagen!=null">
+							<h5 class="Kalinga" style="margin-top:5px;"  *ngIf="banco_tarjeta!=null">{{banco_tarjeta}}</h5>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-2 col-md-3 col-sm-3 col-7">
+							<div class="form-floating form-lg" style="margin-bottom:0px;">
+								<select  style="margin-bottom:0px;margin-top:0px;padding:0px;border-radius:2px;font-size:50px;text-align:center;" [(ngModel)]="currency" name="currency" class="browser-default custom-select Poppins-regular form-control-lg">
+									<option *ngFor='let item of listCurrency' class="Kalinga"[value]="item.value">{{item.label}}</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-lg-10 col-md-9 col-sm-9 col-6">
+							<div class="form-floating form-lg" style="margin-bottom:3px;">
+								<input id="monto" maxlength="18" inputmode="numeric" name="monto" class="form-control form-control-lg Kalinga money2" type="text" style="font-size:50px;text-align:right;" [(ngModel)]="monto" [disabled]="disabledMonto" (keyup)="devolverEvent($event)" (keypress)="getEventMonto($event)" (click)="moveCursorToEnd()" (keydown)="keyDown($event)" (focus)="moveCursorToEnd()" (change)="changeAmount($event)" (input)="inputEvent($event)" onpaste="return false;" oncut="return false;">
+								<label for="monto" class="Kalinga {{claseMonto}}">Monto</label>
+							</div>
+						</div>
+					</div>
+					<div class="row" style="margin-top:0px;padding-top:2px;">
+						<div class="col-lg-6 col-md-6 col-xs-12 col-sm-12"  style="text-align:left;">
+							<div class="form-floating"  style="margin-bottom:10px;">
+								<input type="email" name="email" autocomplete="off" id="email" [disabled]="disabledMonto" class="form-control Kalinga" style="text-transform:lowercase;background:white;" [(ngModel)]="email" maxlength="60" onpaste="return false;" oncut="return false;" autocomplete="off" required>
+								<label for="email" class="Kalinga {{claseMonto}}" id="tagEmail">Correo electrónico a pagar</label>
+							</div>
+						</div>
+						<div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+							<div class="form-floating" nstyle="margin-bottom:10px;">
+								<input type="text" name="description" autocomplete="off" id="description" class="form-control Kalinga" style="text-transform:lowercase;background:white;" [(ngModel)]="description" maxlength="60" onpaste="return false;" oncut="return false;" autocomplete="off">
+								<label for="description" class="Kalinga">Descripción</label>
+							</div>
+						</div>
+					</div>
+					<div class="row" style="margin-top:0px;padding-top:0px;">
+						<div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+							<div class="form-floating" style="margin-bottom:10px;">
+								<input type="text" name="titular" autocomplete="off" id="titular" class="form-control Kalinga" style="text-transform:lowercase;background:white;" [(ngModel)]="titular" maxlength="60" onpaste="return false;" oncut="return false;" autocomplete="off"  required>
+								<label for="titular" class="Kalinga">Titular de la tarjeta</label>
+							</div>
+						</div>
+						<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="text-align:left;">
+							<label class="Kalinga" style="font-size:10px;margin-bottom:0px;">Tipo de documento</label>
+							<div class="row">
+								<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+									<select  name="type" style="margin-bottom:0px;margin-top:0px;padding:0px;border-radius:4px;padding: 6px;" [(ngModel)]="id_doc_type" class="browser-default custom-select Kalinga">
+										<option *ngFor='let item of listType' [value]="item" class="Kalinga">{{item}}</option>
+									</select>
+								</div>
+								<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+									<div class="form-floating responsive-top" style="margin-bottom:0px;padding:0px;border-radius:4px;">
+										<input type="text" inputmode="numeric" id="documento" name="documento" class="form-control Kalinga" style="padding-top:7px;padding-bottom:6px;margin-bottom:0px;" [(ngModel)]="doc" maxlength="9" onpaste="return false;" oncut="return false;" autocomplete="off" (keypress)="keyPress($event)">
+										<label for="documento" class="Kalinga">Documento</label>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row" style="margin-top:0px;padding-top:0px;">
+						<div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+							<div class="form-floating" style="margin-bottom:0px;">
+								<input  type="text"  class="form-control" name="nro" id="nro" class="form-control Kalinga"  style="text-transform:lowercase;background:white;" [(ngModel)]="nro_tarjeta2"  minlength="13" maxlength="19" required  (blur)="changeCard(nro_tarjeta2)" (keypress)="keyPress($event)" onpaste="return false;" oncut="return false;" autocomplete="off" >
+								<span  class="field-icon" (click)="showPassword3()" style="vertical-align:text-top;padding-top:0px;width:20px;"><img src="assets/images/visibility_black.svg" alt="" width="20px" height=50px;></span>
+								<label for="nro_tarjeta" class="Kalinga">Nro.Tarjeta</label>
+							</div>
+						</div>
+						<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="text-align:left;">
+							<div class="row" style="margin-top:0px;padding-top:10px;">
+								<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+									<div class="form-floating" style="margin-bottom:0px;">
+										<input type="password" id="cvv" size="4" maxlength="4" name="cvv" inputmode="numeric" class="form-control Kalinga" style="padding-top:8px;padding-bottom:8px;margin-bottom:0px;" [(ngModel)]="cvv" (keypress)="keyPress($event)" onpaste="return false;" oncut="return false;" autocomplete="off">
+										<span  class="field-icon toggle-password" (mouseover)="showPassword2()" (mouseout)="showPassword2Out()" style="vertical-align:text-top;padding-top:0px;width:20px;"><img src="assets/images/visibility_black.svg" alt="" width="20px" height=50px;></span>
+										<label for="cvv" class="Kalinga">CVC</label>
+									</div>
+								</div>
+								<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+									<div class="form-floating" style="margin-bottom:0px;">
+										<input type="text" id="expiracion" name="expiracion" inputmode="numeric" class="form-control Kalinga" style="padding-top:8px;padding-bottom:8px;margin-bottom:0px;" [(ngModel)]="expiracion" (keypress)="keyPress($event)" autocomplete="off" maxlength="7" onpaste="return false;" oncut="return false;">
+										<label for="expiracion" class="Kalinga">MM/AA (Expiración)</label>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" *ngIf="mostrarTelefono && mostrarOtp!=null && mostrarOtp!='NONE'">
+							<div class="form-floating" style="margin-bottom:0px;">
+							  <input type="text" id="numero_telefono" name="numero_telefono" class="form-control Kalinga phone" inputmode="numeric" autocomplete="cc-number" style="padding-top:8px;padding-bottom:8px;margin-bottom:0px;" [(ngModel)]="numero_telefono" maxlength="11" size="11" onpaste="return false;" oncut="return false;" (focus)="blurTelefono()">
+							  <label for="numero_telefono" class="Kalinga active">Número de teléfono</label>
+							</div>
+						</div>
+						<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="text-align:left;" *ngIf="mostrarOtp=='OTP_CCR' && status_tarjeta!='VALIDATED'">
+							<label class="Kalinga" style="font-size:10px;margin-bottom:0px;">Moneda de la tarjeta</label>
+							<select  name="moneda_tarjeta" style="margin-bottom:0px;margin-top:0px;padding:0px;border-radius:4px;padding: 6px;" [(ngModel)]="moneda_tarjeta" class="browser-default custom-select Kalinga">
+								<option *ngFor='let item of listMonedasCard' [value]="item.value" class="Kalinga">({{item.value}})- {{item.name}}</option>
+							</select>
+						</div>
+						<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" *ngIf="mostrarOtp!=null && mostrarOtp!='NONE'">
+							<div class="form-floating" style="margin-bottom:0px;" *ngIf="mostrarOtp=='OTP_BANK'">
+							  <input type="text" id="token" size="8" maxlength="8" name="token" class="form-control Kalinga" style="padding-top:8px;padding-bottom:8px;margin-bottom:0px;" [(ngModel)]="token" (keypress)="keyPress($event)" onpaste="return false;" oncut="return false;" autocomplete="off">
+							  <label for="token" class="Kalinga">OTP(Clave temporal)</label>
+						</div>
+							<div class="form-floating" style="margin-bottom:0px;" *ngIf="mostrarOtp=='OTP_CCR' && status_tarjeta!='VALIDATED'">
+							  <input type="text" id="token_ccr" size="8" maxlength="12" name="token_ccr" class="form-control Kalinga" style="padding-top:8px;padding-bottom:8px;margin-bottom:0px;" [(ngModel)]="token" onpaste="return false;" oncut="return false;" autocomplete="off" (focus)="setMaskMonto()" (keyup)="devolverEventToken($event)" (keypress)="getEventMontoToken($event)" (click)="moveCursorToEndToken()" (keydown)="keyDown($event)" (change)="changeAmountToken($event)" (input)="inputEventToken($event)" onpaste="return false;" oncut="return false;">
+							  <label for="token_ccr" class="Kalinga active">OTP(Clave temporal)</label>
+						</div>
+							<div class="col-lg-12 col-md-12 col-12 col-sm-12" style="text-align:center;" *ngIf="mostrarOtp=='OTP_CCR' && status_tarjeta!='VALIDATED'">
+								<label class="Kalinga" style="color:#ea5e1e;font-size:12px;">
+									La tarjeta requiere ser validada antes de realizar cualquier pago. Para eso debe llenar los datos completos del formulario y presionar el botón “Solicitar  token”, el cual generará una transacción por un monto máximo de {{monto_maximo}} Debe ingresar a la cuenta asociada a la tarjeta y colocar en el campo OTP el monto descontado de su cuenta.
+								</label>
+							</div>
+						</div>
+						<div class="col-lg-6 col-md-6 col-sm-6 col-12" style="text-align:left;">
+							<label class="Kalinga" style="font-size:10px;margin-bottom:0px;"></label>
+							<div class="page">
+								<div class="page__toggle" style="display:inline-block;margin-right:5px;">
+									<label class="toggle">
+										<input class="toggle__input" name="cedito1" type="checkbox" (click)="changeTipoT()"  [(ngModel)]="tipoTarjetaCreditBoolean">
+										<span class="toggle__label">
+											<span class="toggle__text Kalinga-bold">CRÉDITO</span>
+										</span>
+									</label>
+								</div>
+								<div class="page__toggle" style="display:inline-block;">
+									<label class="toggle">
+										<input class="toggle__input" type="checkbox" name="debito1" (click)="changeTipoT()" [(ngModel)]="tipoTarjetaDebitBoolean">
+										<span class="toggle__label">
+											<span class="toggle__text Kalinga-bold">DÉBITO</span>
+										</span>
+									</label>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-6 col-md-6 col-sm-12 col-12" *ngIf="tipoTarjeta=='DEBIT'">
+							<div class="row">
+								<div class="col-lg-6 col-md-6 col-sm-6 col-12" style="text-align: left;">
+									<label class="Kalinga" style="font-size:10px;margin-bottom:0px;">Tipo de cuenta</label>
+									<select  name="tipo_cuenta" style="margin-bottom:0px;margin-top:0px;padding:0px;border-radius:4px;" [(ngModel)]="tipo_cuenta" class="browser-default custom-select Kalinga">
+										<option *ngFor='let item of listTiposCuenta' [value]="item" class="Kalinga">{{item}}</option>
+									</select>
+								</div>
+								<div class="col-lg-6 col-md-6 col-sm-6 col-12" style="margin-top: 24px;" *ngIf="tdd_pin_required == true">
+									<div class="form-floating" style="margin-top:0px;padding-top:0px;">
+										<input type="password" id="clave1" name="clave1" class="form-control Kalinga" [(ngModel)]="clave_debito" maxlength="6" required onpaste="return false;" oncut="return false;" autocomplete="off" inputmode="numeric">
+										<span  class="field-icon toggle-password" (mouseover)="showPassword1()" (mouseout)="showPassword1Out()" style="vertical-align:middle;padding-top:0px;width:15px;"><img src="assets/images/eye-solid.svg" width="15px"/></span>
+										<label for="clave1"  class="Kalinga" lang="es">PIN/Clave tarjeta</label>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row" style="margin-top:0px;padding-top:0px;margin-bottom:10px;">
+						<div class="col-lg-12 col-md-12 col-12 col-sm-12" style="text-align:left;">
+							<label style="font-size:10px; color: black;" class="Kalinga-bold">Procesado por: </label>
+							<img src="assets/images/credicard_horizontal.png" alt="" style="height:40px;">
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="d-grid gap-0 col-3 mx-auto">
+							<button type="button" class="btn btn-outline-warning btn-rounded  waves-effect z-depth-0 Kalinga-bold d-none d-md-inline-block" (click)="back()" style="padding-top:8px;padding-bottom:7px;margin-bottom:9px;font-size:18px;border-radius: 25px 25px 25px 25px;text-align: center;" lang="es">Regresar</button>
+						</div>
+						
+							<button class="btn btn-rounded waves-effect z-depth-0 Kalinga-bold" style="padding-top:10px;padding-bottom:10px;margin-bottom:0px;background: prefix-linear-gradient(left, #e42629, #ea5e1e);background: linear-gradient(to right, #e42629,#ea5e1e);margin-top:5px;font-size:11px;" (click)="sendToken()"  *ngIf="mostrarBotonEnviarToken">solicitar token</button>
+							<div class="d-grid gap-0 col-3 mx-auto">
+							<button class="btn btn-warning btn-rounded waves-effect z-depth-0 Kalinga-bold" (click)="clean()"  style="padding-top:10px;padding-bottom:10px;margin-bottom:0px;font-size:11px;" type="button" lang="es">Limpiar</button>
+							</div>
+							<div class="d-grid gap-0 col-3 mx-auto">
+							<button class="btn btn-rounded waves-effect z-depth-0 Kalinga-bold" (click)="confirmar()" style="padding-top:10px;padding-bottom:10px;margin-bottom:0px;background: prefix-linear-gradient(left, #e42629, #ea5e1e);background: linear-gradient(to right, #e42629,#ea5e1e);margin-top:5px;font-size:11px;" lang="es">Confirmar</button>
+						</div>
+						<div class="col-lg-12 col-md-12 col-12 col-sm-12" style="text-align:center;margin-top:20px;">
+							<label class="Kalinga" style="color:#ea5e1e;font-size:12px;">La transaccion puede incurrir en costos adicionales por favor confirmar al momento del pago</label>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<footer class="page-footer grey lighten-2 d-block d-sm-none" style="bottom:0px;right:0px;position:fixed;width:100%;margin-top:15px;z-index:2000px;">
+		<div class="footer-copyright text-center py-3 Kalinga" style="vertical-align:middle;font-size:13px;bottom:0px;float:bottom;line-height:15px;background:#8d8d8d;">© 2022 Copyright:
+			<a href="https://www.paguetodo.com" style="font-size:13px;" class="Kalinga-bold"> Servicios Paguetodo C.A.</a>
+		</div>
+	</footer>
+	<footer class="page-footer grey lighten-2 d-none d-sm-inline-block" style="bottom:0px;right:0px;width:100%;margin-top:15px;position:fixed;z-index:2000px;">
+		<div class="footer-copyright text-center py-3 Kalinga" style="vertical-align:middle;font-size:13px;bottom:0px;float:bottom;line-height:15px;background:#8d8d8d;">©2022 Copyright:
+			<a href="https://www.paguetodo.com" style="font-size:13px;" class="Kalinga-bold"> Servicios Paguetodo C.A.</a>
+		</div>
+	</footer>
+</div>
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="confirmarPago"  aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-sm"  role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+				<h6 class="Kalinga-bold" id="myModalLabel" style="font-size:14px;margin-top:0px;margin-bottom:0px;"><b>Confirmación de pago</b></h6>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float:left;" (click)="rechazaPago()">
+					<span aria-hidden="true">&times;</span>
+				</button>
+            </div>
+            <div class="modal-body">
+                <p class="Kalinga" style="font-size:14px;" 
+				*ngIf="data_pagar!=null">
+					<label  *ngIf="data_pagar.commission_config_amount!=null  && data_pagar.commission_config_amount!=undefined">
+						La transacción tiene un costo de <b class="Kalinga-bold">&nbsp;{{formattearMonto(data_pagar.commission_config_amount)}}%</b> adicional sobre la transacción, pagando un total de 
+						<b class="Kalinga-bold" *ngIf="data_pagar.amount_formatted!=null">&nbsp;{{data_pagar.amount_formatted}}&nbsp;</b>¿Acepta el costo de la operación?
+					</label>
+					<label  *ngIf="data_pagar.commission_config_amount==null || data_pagar.commission_config_amount==undefined">
+						¿Desea confirmar la operación de <b class="Kalinga-bold" *ngIf="data_pagar.amount_formatted!=null">&nbsp;{{data_pagar.amount_formatted}}&nbsp;?</b>
+					</label>
+				</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light Kalinga" data-dismiss="modal" style="font-size:11px;">NO</button>
+				<button type="button" class="btn Kalinga" style="background:#e42629;font-size:11px;" data-dismiss="modal" (click)="send()">SI</button>
+            </div>
+        </div>
+      </div>
+</div>
+
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="aceptar_pago"  aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-sm"  role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+				<h6 class="Kalinga-bold" id="myModalLabel" style="font-size:14px;margin-top:0px;margin-bottom:0px;"><b>Tiene un pago pendiente</b></h6>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float:left;" (click)="rechazaPago()">
+					<span aria-hidden="true">&times;</span>
+				</button>
+            </div>
+            <div class="modal-body">
+                <p class="Kalinga" style="font-size:14px;">Tiene una solicitud de pago pendiente</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light Kalinga" data-dismiss="modal" style="font-size:11px;"  (click)="rechazaPago()">Rechazar</button>
+				<button type="button" class="btn Kalinga" style="background:#e42629;font-size:11px;" data-dismiss="modal" (click)="payWithBotonPago()">Pagar</button>
+            </div>
+        </div>
+      </div>
+</div>
+<div class="modal fade bd-example-modal-md" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="modalRepresion"  aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-md"  role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float:left;">
+					<span aria-hidden="true">&times;</span>
+				</button>
+            </div>
+            <div class="modal-body" style="text-align:center;">
+				<img src="assets/images/logo_app2.png" alt="" style="width:200px;">
+                <h4 class="Kalinga-bold" style="color:#e42629;margin-top:15px;">Debe ingresar el monto acorde a la Nueva Expresión Monetaria</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light Kalinga" data-dismiss="modal" style="font-size:12px;">Cerrar</button>
+            </div>
+        </div>
+      </div>
+</div>

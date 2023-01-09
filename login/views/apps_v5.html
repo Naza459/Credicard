@@ -1,0 +1,316 @@
+<div class="fixed-sn">
+	<bar-menu id="menuBar1" *ngIf="!newProfile" [nombre_usuario]="nombre_usuario" [nombre_email]="email_usuario" [id_doc]="doc_usuario" [actions]="menu_top"></bar-menu>
+	<nav id="menuBar2" class="mb-1 navbar navbar-expand-lg navbar-dark indigo" *ngIf="newProfile" style="background: prefix-linear-gradient(left, #e42629, #ee7f17);background: linear-gradient(to right, #e42629,#ee7f17);">
+		<button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#collapseEx2">
+            <i class="material-icons">
+				menu
+			</i>
+        </button>
+		<a class="navbar-brand" style="padding-top:0px;margin-top:0px;">
+           <strong class="Kalinga-bold" style="font-size:30px;color:white;" lang="es">MI CUENTA</strong>
+        </a>
+		<ul class="navbar-nav ml-auto nav-flex-icons">
+			<li class="nav-item">
+				<button class="btn btn-outline-white btn-sm my-0 Kalinga-bold"  (click)="redirectLogin()" lang="es">Cerrar sesión</button>
+			</li> 
+		</ul>
+	</nav>
+    <main style="padding-top:15px;width:100%;margin-left:0px;padding-left:0px;padding-top:0px;">
+        <div class="container-fluid text-center" style="width:100%;">
+			<loading-service></loading-service>  
+			<msg-component [mensaje]="mensaje"></msg-component>
+			<div class="container content">
+				<div>
+					<div  class="row">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+							<p class="h4 mb-4 Kalinga-bold"  *ngIf="!newProfile" lang="es">Aplicaciones disponibles</p>
+							<p class="h4 mb-4 Kalinga-bold"   *ngIf="newProfile" lang="es">Perfil de usuario</p>
+						</div>
+					</div>
+				</div>
+				<div *ngIf="!newProfile && apps!=null && apps.length!=0">
+					<div  class="row" *ngIf="!hayMasDeUnWallet" style="justify-content:center;">
+						<div class="d-none d-sm-block"  *ngFor='let item of apps let i = index;' style="margin-right:10px;margin-left:10px;">
+							<div class="skill-card" style="cursor:pointer;" (click)="selectedRedirect(item)" *ngIf="item!=null">
+								<header [class]="'skill-card__header fondo-gris'">
+									<img class="skill-card__icon" *ngIf="item.app_icon!=null" [src]="item.app_icon" id="header-app-{{i}}" name="header-app-{{i}}" width="100px"/>
+								</header>
+								<section class="skill-card__body">
+									<h2 lang="es"class="skill-card__title Kalinga" style="margin-bottom:15px;color:black;padding-top:15px;" *ngIf="item.formatted_app_name">{{item.formatted_app_name}}</h2>
+									<span class="skill-card__duration Kalinga" style="margin-top:10px;color:#0039cb;" *ngIf="item.formatted_owner_name">{{item.formatted_owner_name}}</span>
+									<ul class="skill-card__knowledge" *ngIf="item.name!=null">
+										<li class="Kalinga" style="font-size:12px;">{{item.name}}</li>
+									</ul>
+								</section>
+							</div>
+						</div>
+						<div class="col-lg-12 col-md-12 col-sm-12 col-12  d-sm-none" *ngFor='let item of apps' style="margin-top:10px;">
+							<div class="skill-card" style="cursor:pointer;" (click)="selectedRedirect(item)" *ngIf="item!=null" style="padding:10px;width:100%;">
+								<header [class]="'skill-card__header fondo-gris'">
+									<img class="skill-card__icon" *ngIf="item.app_icon!=null" [src]="item.app_icon" id="header-app-{{i}}" name="header-app-{{i}}" width="100px"/>
+								</header>
+								<section class="skill-card__body">
+									<h2 lang="es"class="skill-card__title Kalinga" style="margin-bottom:15px;color:black;padding-top:15px;" *ngIf="item.formatted_app_name">{{item.formatted_app_name}}</h2>
+									<span class="skill-card__duration Kalinga" style="margin-top:10px;color:#0039cb;" *ngIf="item.formatted_owner_name">{{item.formatted_owner_name}}</span>
+									<ul class="skill-card__knowledge" *ngIf="item.name!=null">
+										<li class="Kalinga" style="font-size:12px;">{{item.name}}</li>
+									</ul>
+								</section>
+							</div>
+						</div>
+					</div>
+					<div class="row" *ngIf="hayMasDeUnWallet">
+						<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+							<h6 class="Kalinga-bold"  style="color:#110B79;" lang="es">Hay un pago pendiente, con que billetera desea pagarlo</h6>
+							<button type="button" class="btn btn-danger  btn-rounded Kalinga" style="padding-left:15px;padding-right:15px;"(click)="rechazarPago()">Rechazar pago</button>
+						</div>
+					</div>
+					<div  class="row" *ngIf="hayMasDeUnWallet">
+						<div style="float:center;"  *ngFor='let item of wallet_data let i = index;'>
+							<div class="skill-card" style="cursor:pointer;" (click)="selectedRedirect(item)" *ngIf="item!=null" style="margin-right:10px;margin-left:10px;">
+								<header [class]="'skill-card__header fondo-gris'">
+									<img class="skill-card__icon" *ngIf="item.app_icon!=null" [src]="item.app_icon" id="header-app-{{i}}" name="header-app-{{i}}" width="100px"/>
+								</header>
+								<section class="skill-card__body">
+									<h2 lang="es"class="skill-card__title Kalinga" style="margin-bottom:15px;color:black;padding-top:15px;" *ngIf="item.formatted_app_name">{{item.formatted_app_name}}</h2>
+									<span class="skill-card__duration Kalinga" style="margin-top:10px;color:#0039cb;" *ngIf="item.formatted_owner_name">{{item.formatted_owner_name}}</span>
+									<ul class="skill-card__knowledge" *ngIf="item.name!=null">
+										<li class="Kalinga" style="font-size:12px;">{{item.name}}</li>
+									</ul>
+								</section>
+							</div>
+						</div>
+						<div class="col-lg-6 col-md-6 col-sm-6 col-12  d-sm-none" *ngFor='let item of wallet_data' style="margin-top:10px;">
+							<img class="circular_image" [src]="item.app_icon" (click)="selectedRedirect(item)"/>
+							<h6 class="Kalinga-bold" style="font-size:11px;color:#1976d2;;vertical-align:middle;margin-top:10px;" *ngIf="item.owner_name!=null">{{item.owner_name}}<br *ngIf="item.name!=null">
+							<label *ngIf="item.name!=null" style="color:#607d8b;text-transform:lowercase;font-size:12px;" class="Kalinga">{{item.name}}</label></h6>
+						</div>
+					</div>
+			</div>
+            <form *ngIf="newProfile">
+            	<div class="row">
+         			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+         				<h6 class="Kalinga" style="color:#0D47A1;font-size:11px;" lang="es">Tipo de persona</h6>
+						<div class="page">
+							<div class="page__toggle" style="display:inline-block;margin-right:5px;">
+								<label class="toggle">
+									<input class="toggle__input" type="checkbox" (click)="selectedIdDoc()"  [(ngModel)]="itemNatural" name="profile1">
+									<span class="toggle__label">
+										<span class="toggle__text Kalinga" lang="es">Persona natural</span>
+									</span>
+								</label>
+							</div>
+							<div class="page__toggle" style="display:inline-block;">
+								<label class="toggle">
+									<input class="toggle__input" type="checkbox"  (click)="selectedIdDoc()" [(ngModel)]="itemJuridica" name="profile2">
+									<span class="toggle__label">
+										<span class="toggle__text Kalinga" lang="es">Persona juridica</span>
+									</span>
+								</label>
+							</div>
+						</div>
+            		</div> 
+            		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            			<h6 class="Kalinga" style="color:#0D47A1;font-size:11px;" lang="es">Documento de identidad</h6>
+            			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-left:0px;padding-right:0px;margin-left:0px;margin-rigth:0px;margin-bottom:0px;padding-bottom:0px;">
+		                    <div>
+								<div style="display:inline-block;width:28%;">
+									<select  name="type" style="margin-bottom:0px;margin-top:0px;padding:0px;border-radius:4px;font-size:12px;" [(ngModel)]="dataProfile.id_doc_type" class="browser-default custom-select Kalinga">
+										<option *ngFor='let item of listDocType' [value]="item" style="font-size:12px;" lang="es">{{item}}</option>
+									</select>
+								</div>
+								<div style="display:inline-block;width:70%;">
+									<input type="text" name="doc_id" id="doc_id" class="form-control Kalinga" style="padding:0px;margin-right:2px;margin-bottom:0px;text-transform:uppercase;"  maxlength="9" required [(ngModel)]="dataProfile.id_doc" placeholder="Nro.documento" (keypress)="keypressNumeros($event)" (blur)="completeDoc(dataProfile.id_doc)">
+								</div>
+							</div>
+					    </div>
+					    <label class="Kalinga" style="color:#E65100;font-size:11px;" *ngIf="dataProfile.id_doc==null || dataProfile.id_doc=='' || dataProfile.id_doc==undefined " lang="es">{{validacionProfile.id_doc}}</label>
+            		</div>  	
+            	</div>
+            	<div class="row" *ngIf="itemNatural">
+            		<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+						<div class="md-form md-outline" style="margin-top:10px;margin-bottom:0px;">
+							<input type="text" name="nombre" id="nombre" class="form-control Kalinga" style="text-transform:lowercase;background:white;text-transform:uppercase;margin-bottom:0px;" [(ngModel)]="dataProfile.name" maxlength="80"  autocomplete="off">
+							<label for="nombre" class="Kalinga" lang="es">Nombres</label>
+						</div>
+						<label class="Kalinga" style="color:#E65100;font-size:11px;" *ngIf="dataProfile.name==null || dataProfile.name=='' || dataProfile.name==undefined " lang="es">{{validacionProfile.nombre}}</label>
+            		</div>
+            		<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+						<div class="md-form md-outline" style="margin-top:10px;margin-bottom:0px;">
+							<input type="text" name="apellidos" id="apellidos" class="form-control Kalinga" style="text-transform:lowercase;background:white;text-transform:uppercase;margin-bottom:0px;" [(ngModel)]="dataProfile.lastName" maxlength="80"  autocomplete="off" >
+							<label for="apellidos" class="Kalinga" lang="es">Apellidos</label>
+						</div>
+            			<label class="Kalinga" style="color:#E65100;font-size:11px;" *ngIf="dataProfile.lastName==null || dataProfile.lastName=='' || dataProfile.lastName==undefined " lang="es">{{validacionProfile.apellido}}</label>
+            		</div>
+            	</div>
+            	<div class="row" *ngIf="itemJuridica || valor_active=='JURIDICA' ">
+            		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<div class="md-form md-outline" style="margin-top:10px;margin-bottom:0px;">
+							<input type="text" name="razon" id="razon" class="form-control Kalinga" style="text-transform:lowercase;background:white;text-transform:uppercase;margin-bottom:0px;" [(ngModel)]="dataProfile.business_name" maxlength="100"  autocomplete="off" >
+							<label for="razon" class="Kalinga" lang="es">Razón social</label>
+						</div>
+            			<label class="Kalinga" style="color:#E65100;font-size:11px;" *ngIf="dataProfile.business_name==null || dataProfile.business_name=='' || dataProfile.business_name==undefined " lang="es">{{validacionProfile.business_name}}</label>
+            		</div>
+            	</div>
+            	<div class="row">
+            		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+						<label class="Kalinga" style="margin-bottom:0px;font-size:11px;text-align:left;" lang="es">País de residencia</label>
+						<select  style="margin-bottom:0px;margin-top:0px;padding:0px;border-radius:4px;"[(ngModel)]="country" class="browser-default custom-select Kalinga" name="pais" lang="es">
+							<option lang="es"*ngFor='let item of listCountry' [value]="item.value" >{{item.name}}</option>
+						</select>
+						<label class="Kalinga" lang="es" style="color:#E65100;font-size:11px;" *ngIf="country==null || country=='' || country==undefined ">{{validacionProfile.country}}</label>
+				    </div>
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+						<div class="md-form md-outline" style="margin-top:25px;margin-bottom:0px;">
+							<input type="text" name="alias" id="alias" class="form-control Kalinga" style="background:white;text-transform:uppercase;margin-bottom:0px;" [(ngModel)]="alias" maxlength="25"  autocomplete="off" >
+							<label for="alias" class="Kalinga" *ngIf="itemNatural" lang="es">Alias</label>
+							<label for="alias" class="Kalinga" *ngIf="!itemNatural" lang="es">Nombre comercial</label>
+						</div>
+            			<label style="color:#E65100;font-size:11px;" *ngIf="validacionProfile.alias!=null" class="Kalinga" lang="es">{{validacionProfile.alias}}</label>
+            		</div>
+            	</div>
+            	<div class="row">
+            		<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+						<div class="md-form md-outline" style="margin-bottom:0px;">
+							<input type="text" name="correo" id="correo" class="form-control Kalinga" style="text-transform:lowercase;background:white;margin-bottom:0px;" [(ngModel)]="dataProfile.email" maxlength="83" disabled="true">
+							<label for="correo" class="Kalinga active" lang="es">Correo electrónico</label>
+						</div>
+            		</div>
+            		<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+						<div class="md-form md-outline" style="margin-bottom:0px;">
+							<input type="text" name="phone" id="phone" class="form-control Kalinga phone" style="text-transform:lowercase;background:white;" [(ngModel)]="dataProfile.phone" maxlength="10" (focus)="setMask()">
+							<label for="phone" class="Kalinga active" lang="es">Teléfono</label>
+						</div>
+            		</div>
+            	</div>
+            	<div class="row">
+					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align:right;">
+						<button lang="es" type="button" style="font-size:11px;"  class="btn btn-warning btn-rounded waves-effect z-depth-0 Kalinga-bold" (click)="clean()">Limpiar</button>
+						<button  lang="es" style="font-size:11px;background: prefix-linear-gradient(left, #e42629, #ea5e1e);background: linear-gradient(to right, #e42629,#ea5e1e);" class="btn btn-rounded waves-effect z-depth-0 Kalinga-bold" (click)="saveProfile(dataProfile)">Crear</button>
+					</div>
+				</div>
+            </form>
+		</div>
+			
+		</div>
+	</main>
+</div>
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="msgErrorApps" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="redirectLogin()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body" style="word-wrap: break-word;">
+            <p class="fuente12 Poppins-regular">{{mensaje}}</p>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-blue-grey  kayak-light" data-dismiss="modal" (click)="redirectLogin()">Cerrar</button>
+        </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="msgAlertApps" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+        <div class="modal-header">
+			 <h6 class="modal-title Poppins-regular" id="myModalLabel" style="color:#FFC107;">Alerta</h6>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+           
+        </div>
+        <div class="modal-body" style="word-wrap: break-word;">
+            <p class="Poppins-regular">{{mensaje}}</p>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-blue-grey  Poppins-regular" data-dismiss="modal">Cerrar</button>
+        </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="accessWith" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <h6 class="color-title Kalinga" id="myModalLabel" style="color:#FF8F00;">ACCEDER A:</h6>
+        </div>
+        <div class="modal-body" style="word-wrap: break-word;padding:5px;border-color:none;">
+           <div class="col-lg-12 col-md-12 col-sm-12 col-xs-6 item"  *ngFor="let item of listAgents; let i = index;" style="cursor:pointer;padding:0px;padding-left:2px;padding-right:2px;">
+				<div class="card" style="padding:10px;border:1px solid #ccc;word-wrap: break-word;word-break:break-all;box-shadow:0 2px 5px 0 #81D4FA;"  (click)="selectedAgent(item)">
+					<div  class="row">
+						<div class="col-lg-12">
+							<div style="text-align:center;padding:1px;word-wrap: break-word;">
+								<h6 class="kayak-regular" *ngIf="item.name!=null">{{item.name}}</h6>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-blue-grey  kayak-light" data-dismiss="modal">Cerrar</button>
+        </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="autorizar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false" style="z-index:1050;">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<form id="autorizarDispositivoModal">
+				<div class="modal-header" style="background-color: #FD1A16;box-shadow: 0 4px 8px 0 rgba(0,0,0,0.12),
+            0 2px 4px 0 rgba(0,0,0,0.08);">  
+					<h6 class="heading Kalinga" *ngIf="device_type!=null" style="margin-bottom:2px;padding-bottom:0px; color: #ffffff; font-size: 13px;">{{device_type}} - <b>{{so}} : </b></h6>
+					<h6 class="heading Kalinga" style="color:#ffffff;font-size: 11px"  *ngIf="fingerprint!=null">{{fingerprint}} </h6>
+				</div>
+				<div class="modal-body" style="padding-top:0px;padding-bottom:0px;">
+					<div class="row" style="text-align: center;">
+						<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12" style="margin-right:5px;margin-left:5px;padding:2px;padding-top: 10px" *ngIf="imageUrl">
+							<img src="{{imageUrl}}" style="box-shadow:none;text-align:center;" width="80px" height="80px"/>
+						</div>
+						<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12" style="margin-right:5px;margin-left:5px;vertical-align:top;word-wrap: break-word;padding:2px;">
+							<h5 class="Kalinga" style="color:#FD1A16;word-wrap: break-word;padding-top:35px">Nuevo dispositivo detectado</h5>
+						</div>
+					</div>
+					<div class="row" style="margin-top:10px;">
+						<div class="md-form md-outline col-lg-6 col-md-6 col-sm-6 col-xs-12" style="margin-bottom:0px;">
+							<input class="form-control Kalinga ng-dirty ng-valid ng-touched" id="codigo" maxlength="6" [(ngModel)]="codigo" name="form1" required="" style="text-transform:uppercase;background:white;height: 85px;font-size: 40px;" type="text"  autocomplete="off" >
+							<label  class="Kalinga active" for="correo-electronico-1" style="margin-left: 20px;">Código de autorización</label>
+						</div>
+						<div  class="md-form md-outline col-lg-6 col-md-6 col-sm-6 col-xs-12" style="margin-bottom:0px;">
+							<input  class="form-control Kalinga ng-dirty ng-valid ng-touched" id="nombre_new" maxlength="10" [(ngModel)]="nombre_new" name="nombre_new" required style="text-transform:lowercase;background:white;height: 85px;font-size: 40px;" type="text">
+							<label class="Kalinga active" for="correo-electronico-1" style="margin-left: 20px;">Nombre(opcional)</label>
+						</div>
+					</div>
+					<div class="row" style="margin-top:0px;">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align: center;">
+							<p style="color:black;margin-bottom:1px;text-align: center; margin-bottom:10px;font-size:13px;" class="Kalinga">
+								¿No te ha llegado ningún correo de nosotros?&nbsp;<a style="text-decoration:underline;font-size:15px;color:#f44336;" (click)="reenviarCorreo()">Enviar correo</a>
+							</p>
+							<label style="color:#757575;margin-bottom:1px;" class="Kalinga" *ngIf="showMessageResend">
+								{{mensajeReenvio}}
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-light Poppins-regular"  type="button" data-dismiss="modal" (click)="devolver()">Cancelar</button>
+					<button type="sumit" class="btn btn-orange Kalinga"  data-dismiss="modal" (click)="autorizate()">Autorizar</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+
+
+

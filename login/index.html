@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<base>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="author" content="Martha Victoria Rodríguez & Yallal Ulloa & Oswaldo Lozada">
+		<link rel="icon" href="assets/images/favicon.png"/>
+		<meta http-equiv="language" content="es">
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<!--
+		<meta http-equiv="Content-Security-Policy" content="default-src 'self' https://staticd.paguetodo.com https://apid.paguetodo.com https://storage.googleapis.com https://www.google-analytics.com;
+															script-src  'self' 'unsafe-eval' 'unsafe-inline' https://staticd.paguetodo.com https://storage.googleapis.com https://www.googletagmanager.com https://www.google-analytics.com; 
+															style-src   'self' 'unsafe-eval' 'unsafe-inline' https://staticd.paguetodo.com https://storage.googleapis.com; 
+															font-src    'self' 'unsafe-eval' 'unsafe-inline' https://staticd.paguetodo.com https://storage.googleapis.com;
+															img-src   * 'self' 'unsafe-eval' 'unsafe-inline' https://staticd.paguetodo.com https://storage.googleapis.com https://demo.paguetodo.com data: https;
+															">-->
+		<title>CredicardPagos</title>
+		<link rel="manifest" href="web-manifest.json">
+		<meta property="og:title" content="CredicardPagos" />
+		<meta property="og:type" content="plataform" />
+		<meta property="og:url" content="https://app.credicard.com.ve" />
+		<meta name="description" content="plataforma transaccional de pagos">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="CredicardPagos">
+		<link rel="apple-touch-icon" href="assets/images/ptlogo-short-152x152.png">
+		<meta name="msapplication-TileImage" content="assets/images/ptlogo-short-144x144.png">
+		<meta name="msapplication-TileColor" content="#e42629">
+		<meta name="theme-color" content="#e42629" >
+
+	</head>
+	<body>
+		<login-app>
+			<div id="pleaseWait" style="text-align:center;display:none">
+
+				<img src="assets/images/logo_app_2.png" style="margin-top:50px;width:200px;">
+				<br>
+				<h3 style="margin-top:15px;color:#2979FF;" class="Kalinga">CredicardPagos</h3>
+				
+			</div>
+
+			<div class="modal" style="text-align:center;margin-top:180px;display: none" scroll="no" id="loadingAppDialog" data-backdrop="static" data-keyboard="false">
+				
+				<div>
+					<img style="width:150px;height:150px;"src="assets/images/loading.gif">
+					<br>
+					<h3 style="margin-top:15px;color:#2979FF;" class="Kalinga">Instalando aplicacion...</h3>
+				</div>
+			
+			</div>
+		</login-app>
+		<script  src="https://staticd.paguetodo.com/node_modules/shim.min.js"></script>
+		<script src="https://staticd.paguetodo.com/node_modules/all-node-modules.js"></script>
+		<script src="index4.js"></script>
+		<!-- comments:comment html -->
+		<script src="login-utils/loading.js"></script> 
+		<script src="login-utils/msg.js"></script>
+		<script src="login-app.callservices.js"></script>
+		<script src="login-utils/translate-v2.js"></script>
+		<script src="login-utils/utils.js"></script>
+		<script src="login-controllers/bar-with-menu.js"></script>
+		<script src="login-controllers/authorized.js"></script>
+		<script src="login-controllers/register.js"></script>
+		<script src="login-controllers/register-with-email.js"></script>
+		<script src="login-controllers/login.js"></script>
+		<script src="login-controllers/active.js"></script>
+		<script src="login-controllers/expired-password.js"></script>
+		<script src="login-controllers/request-recovery-password.js"></script>
+		<script src="login-controllers/recovery-password.js"></script>
+		<script src="login-controllers/resend-activation.js"></script>
+		<script src="login-controllers/apps.js"></script>	
+		<script src="login-controllers/rapid-pay.js"></script>
+		<script src="login-controllers/voucher.js"></script>
+		<script src="login-app.component.js"></script>
+		<script src="login-app-router1.js"></script>
+		<script src="login-app.module.js"></script>
+		<script src="login-main.js"></script>
+		<!-- endcomments -->
+
+		<link id="principal_css" href="styles-v5.css" rel="stylesheet">
+		<script id="principal_js" src=" "></script>
+		<div  class="add-button hidden-xs-down hidden-sm-down" style="display:none;">
+			<button  class="btn btn-orange">Instalar aplicacion</button>
+		</div>
+		<script  async defer type="text/javascript" src="app3.js"></script>
+		<script  type="text/javascript" src="https://staticd.paguetodo.com/js/jquery-3.5.1.min.js" rel="preload"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+		<script  type="text/javascript" src="https://staticd.paguetodo.com/js/inputMask/jquery.inputmask.bundle.js"></script>
+		<script  type="text/javascript" src="https://staticd.paguetodo.com/js/payform.min.js"></script>
+		<script  type="text/javascript" src="https://staticd.paguetodo.com/js/jquery.mask.min.js"></script>
+		<script type="text/javascript" src="https://staticd.paguetodo.com/js/jsbn.js"></script>
+		<script type="text/javascript" src="https://staticd.paguetodo.com/js/rsa.js"></script>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+		<noscript>Su navegador no soporta JavaScript!</noscript>
+	</body>
+</html>

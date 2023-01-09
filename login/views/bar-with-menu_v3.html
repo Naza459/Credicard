@@ -1,0 +1,36 @@
+
+<nav class="mb-1 navbar navbar-expand-lg navbar-dark" style="background: prefix-linear-gradient(left, #e42629, #ee7f17);background: linear-gradient(to right, #e42629,#ee7f17);">
+	<a class="navbar-brand Kalinga-bold" routerLink="/init" style="margin-top:0px;margin-bottom:0px;">
+		<h6 lang="es"style="margin-bottom:0px;padding-bottom:0px;">{{nombre_usuario}}</h6>
+		<h6 lang="es" *ngIf="nombre_email!=null" style="font-size:12px; color:#e0e0e0;margin-top:0px;margin-bottom:0px;">{{nombre_email}}</h6>
+	</a>
+	
+	<ul class="nav navbar-nav nav-flex-icons ml-auto">
+		<li class="nav-item" style="cursor:pointer;color:white;">
+			<a class="nav-link" aria-current="page" (click)="signOut()">
+				<img src="assets/images/logout.svg"/>&nbsp;
+				<span class="clearfix d-none d-sm-inline-block Kalinga-bold">Salir
+				</span>
+			</a>
+		</li>
+    </ul>
+</nav>
+<div class="modal fade bd-example-modal-sm"  tabindex="-1" role="dialog" id="extenderSesion" aria-labelledby="Mensaje" aria-hidden="true" data-backdrop="static" data-keyboard="false" style="z-index:2050;">
+	<div class="modal-dialog modal-sm" role="document">
+		<div class="modal-content" style="text-align:center;">
+			<div class="modal-header" style="text-align:center;float:center;">
+				<div style="width:100%;text-align:center;">
+					<h6 class="modal-title Kalinga" id="myModalLabel" style="color:#FFC107;float:center;">Extender<span aria-hidden="true" class="close" data-dismiss="modal" aria-label="Close">&times;</span></h6>
+				</div>
+			</div>
+			<div class="modal-body" style="word-wrap: break-word;">
+				<p class="Kalinga">La sesión está por expirar ¿Quieres extenderla?</p>
+			</div>
+			<div class="modal-footer" style="text-align:center;float:center">
+				<div  style="width:100%;text-align:center;">
+					<button type="button" class="btn btn-orange Kalinga" data-dismiss="modal" (click)="extendSesion()" style="font-size:11px;float:center">Extender</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
